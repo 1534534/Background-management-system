@@ -2,18 +2,8 @@
   <el-card shadow="always" :body-style="{ padding: '20px' }">
     <el-table border style="margin: 10px 0" :data="skuArr">
       <el-table-column type="index" label="序号" width="80px"></el-table-column>
-      <el-table-column
-        label="名称"
-        width="80px"
-        show-overflow-tooltip
-        prop="skuName"
-      ></el-table-column>
-      <el-table-column
-        label="描述"
-        width="300px"
-        show-overflow-tooltip
-        prop="skuDesc"
-      ></el-table-column>
+      <el-table-column label="名称" width="80px" show-overflow-tooltip prop="skuName"></el-table-column>
+      <el-table-column label="描述" width="300px" show-overflow-tooltip prop="skuDesc"></el-table-column>
       <el-table-column label="图片" width="300px">
         <template #="{ row, $index }">
           <img :src="row.SkuDefault" style="width: 100px; height: 100px" />
@@ -23,33 +13,15 @@
       <el-table-column label="价格" width="300px"></el-table-column>
       <el-table-column label="操作" fixed="right" width="300px">
         <template #="{ row, $index }">
-          <el-button
-            @click="updateSale(row)"
-            type="primary"
-            size="samll"
-            :icon="row.isSale == 1 ? 'Bottom' : 'Top'"
-          ></el-button>
+          <el-button @click="updateSale(row)" type="primary" size="small"
+            :icon="row.isSale == 1 ? 'Bottom' : 'Top'"></el-button>
 
-          <el-button
-            @click="updateSku"
-            type="primary"
-            size="samll"
-            icon="Edit"
-          ></el-button>
-          <el-button
-            @click="findSku(row)"
-            type="primary"
-            size="samll"
-            icon="InfoFilled"
-          ></el-button>
+          <el-button @click="updateSku" type="primary" size="small" icon="Edit"></el-button>
+          <el-button @click="findSku(row)" type="primary" size="small" icon="InfoFilled"></el-button>
 
-          <el-popconfirm
-            :title="`你确定要删除${row.skuName}吗？`"
-            width="200px"
-            @confirm="deleteSku(row)"
-          >
+          <el-popconfirm :title="`你确定要删除${row.skuName}吗？`" width="200px" @confirm="deleteSku(row)">
             <template #reference>
-              <el-button type="primary" size="samll" icon="Delete"></el-button>
+              <el-button type="primary" size="small" icon="Delete"></el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -63,22 +35,13 @@
       <el-row style="margin: 10px 0">
         <el-col :span="6">销售属性</el-col>
         <el-col :span="18">
-          <el-tag
-            style="margin: 5px"
-            v-for="item in skuInfo.skuSaleAttrValueList"
-            :key="item.ID"
-          >
+          <el-tag style="margin: 5px" v-for="item in skuInfo.skuSaleAttrValueList" :key="item.ID">
             {{ item.saleAttrValueName }}
           </el-tag>
         </el-col>
       </el-row>
       <el-row style="margin: 10px 0">
-        <el-carousel
-          height="200px"
-          type="card"
-          direction="horizontal"
-          :interval="4000"
-        >
+        <el-carousel height="200px" type="card" direction="horizontal" :interval="4000">
           <el-carousel-item v-for="item in 6" :key="item">
             <h3 text="2x1" justify="center">{{ item }}</h3>
           </el-carousel-item>
@@ -86,16 +49,9 @@
       </el-row>
     </el-drawer>
 
-    <el-pagination
-      v-model:current-page="pageNo"
-      v-model:page-size="pageSize"
-      :page-sizes="[10, 20, 30, 40]"
-      :background="true"
-      layout=" prev, pager, next, jumper,->,total, sizes,"
-      :total="400"
-      @size-change="handler"
-      @current-change="getHasSku"
-    />
+    <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[10, 20, 30, 40]"
+      :background="true" layout=" prev, pager, next, jumper,->,total, sizes," :total="400" @size-change="handler"
+      @current-change="getHasSku" />
   </el-card>
 </template>
 <script lang="ts" setup>
@@ -110,7 +66,6 @@ import {
 import type { SkuResponseData, SkuData } from '@/api/product/sku/type'
 import { ElMessage } from 'element-plus'
 import { SkuInfoData } from '@/api/product/spu/type'
-
 let pageNo = ref<number>(1)
 let pageSize = ref<number>(10)
 let totla = ref<number>(10)

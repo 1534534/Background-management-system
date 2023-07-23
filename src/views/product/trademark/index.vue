@@ -66,7 +66,7 @@
       :rules="rules"
       ref="formRef"
     >
-      <el-form-item label="品牌名称" prop="tmName" size="normal">
+      <el-form-item label="品牌名称" prop="tmName" >
         <el-input
           placeholder="请您输入品牌名称"
           v-model="trademarkParams.tmName"
@@ -107,7 +107,7 @@ import type {
   TradeMarkResponseData,
 } from '@/api/product/trademark/type'
 import { Plus } from '@element-plus/icons-vue'
-import { ElMessage, UploadProps, formEmits } from 'element-plus'
+import { ElMessage, UploadProps } from 'element-plus'
 let pageNo = ref<number>(1)
 //每一页的数据
 let limit = ref<number>(3)
@@ -166,7 +166,7 @@ onMounted(() => {
 import type { TradeMark } from '@/api/product/trademark/type'
 
 //上传图片组件
-const beforeAvartarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+const beforeAvartarUpload: UploadProps['beforeUpload'] = (rawFile:any) => {
   //在图片上传成功之前出发，可以约束文件类型与大小
   if (
     rawFile.type == 'image/png' ||
@@ -191,10 +191,7 @@ const beforeAvartarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   }
 }
 //图片上传成功钩子
-const handleAvatarSuccess: UploadProps['onSussess'] = (
-  response,
-  uploadFile,
-) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response:any,uploadFile:any) => {
   trademarkParams.logoUrl = response.data
   formRef.value.clearValidate('logoUrl')
 }

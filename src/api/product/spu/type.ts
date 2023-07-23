@@ -47,6 +47,21 @@ export interface SpuImg {
   name?: string
   url?: string
 }
+//存储已有的销售属性值数组类型
+export type SpuSaleAttrValueList = SaleAttrValue[]
+
+//销售属性对象ts类型
+export interface SaleAttr {
+  id?: number
+  createTime?: null
+  updateTime?: null
+  spuId?: number
+  baseSaleAttrId: number | string
+  saleAttrName: string
+  spuSaleAttrValueList: SpuSaleAttrValueList
+  flag?: boolean
+  saleAttrValue?: string
+}
 //已有的SPU的照片墙数据类型
 export interface SpuHasImg extends ResponseData {
   data: SpuImg[]
@@ -63,17 +78,16 @@ export interface SaleAttrResponseData extends ResponseData {
 export interface HasSaleAttrResponseData extends ResponseData {
   data: HasSaleAttr[]
 }
-//销售属性对象ts类型
+//销售属性对象ts类型//已有的销售属性值对象ts类型
 export interface SaleAttrValue {
   id?: number
   createTime?: null
   updateTime?: null
   spuId?: number
   baseSaleAttrId: number | string
-  saleAttrName: string
-  spuSaleAttrValueList: string
-  flag?: boolean
-  saleAttrValue?: string
+  saleAttrValueName: string
+  saleAttrName?: string
+  isChecked?: null
 }
 //SPU已有的销售属性接口返回数据ts类型
 export interface spuSaleAttrValueList extends ResponseData {

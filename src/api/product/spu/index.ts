@@ -6,7 +6,7 @@ import type {
   HasSpuResponseData,
   AllTradeMark,
   SpuHasImg,
-  HasSaleAttrResponseData,
+  HasSaleAttrResponseData, SaleAttrResponseData
 } from './type'
 enum API {
   HASSPU_URL = '/admin/product/',
@@ -46,7 +46,7 @@ export const reqAllSaleAttr = () => {
 }
 //获取已有的Spu拥有的销售属性
 export const reqSpuHasSaleAttr = (spuId: number) => {
-  return request.get<any, HasSaleAttrResponseData>(
+  return request.get<any, SaleAttrResponseData>(
     API.SPUHASSALEATTR_URL + spuId,
   )
 }

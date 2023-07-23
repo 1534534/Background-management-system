@@ -3,6 +3,7 @@ import '@/styles/index.scss'
 import App from '@/App.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 //element-plus国际化
 // @ts-ignore
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
@@ -26,4 +27,6 @@ import 'virtual:svg-icons-register'
 //引入自定义插件对象
 import allGloablComponent from './components/index'
 app.use(allGloablComponent)
+import { isHasButton } from '@/directive/has'
+isHasButton(app)
 app.mount('#app')

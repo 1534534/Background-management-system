@@ -1,37 +1,19 @@
 <template>
   <el-form label-width="100px">
     <el-form-item label="SPU名称">
-      <el-input
-        v-model="SpuParams.spuName"
-        placeholder="请您输入SPU名称"
-      ></el-input>
+      <el-input v-model="SpuParams.spuName" placeholder="请您输入SPU名称"></el-input>
     </el-form-item>
     <el-form-item label="SPU品牌">
       <el-select v-model="SpuParams.tmId">
-        <el-option
-          v-for="(item, index) in AllTradeMark"
-          :value="item.id"
-          :key="item.id"
-          :label="item.tmName"
-        ></el-option>
+        <el-option v-for="(item, index) in AllTradeMark" :value="item.id" :key="item.id" :label="item.tmName"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="SPU描述">
-      <el-input
-        type="textarea"
-        v-model="SpuParams.description"
-        placeholder="请您输入SPU描述"
-      ></el-input>
+      <el-input type="textarea" v-model="SpuParams.description" placeholder="请您输入SPU描述"></el-input>
     </el-form-item>
     <el-form-item label="SPU图片">
-      <el-upload
-        v-model:file-List="imgList"
-        action="/api/admin/product/fileUpload"
-        list-type="picture-card"
-        :on-preview="handlePictureCardPreview"
-        :on-remove="handleRemove"
-        :before-upload="handlerUpload"
-      >
+      <el-upload v-model:file-List="imgList" action="/api/admin/product/fileUpload" list-type="picture-card"
+        :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :before-upload="handlerUpload">
         <el-icon>
           <Plus />
         </el-icon>
@@ -43,90 +25,44 @@
         <el-icon>
           <Plus />
         </el-icon>
-        <img w-full src="dialogImageUrl" alt="Preview Image" />
+        <img w-full :src="dialogImageUrl" alt="Preview Image" style="width:100%;height: 100%;" />
       </el-dialog>
     </el-form-item>
     <el-form-item label="SPU销售属性">
-      <el-select
-        v-model="saleAttrIdAndValueName"
-        :placeholder="
-          unSelectSaleAttr.length
-            ? `还未选择${unSelectSaleAttr.length}个`
-            : '无'
-        "
-      >
-        <el-option
-          v-for="(item, index) in unSelectSaleAttr"
-          :key="item.id"
-          :label="item.name"
-          :value="`${item.id}:${item.name}`"
-        ></el-option>
+      <el-select v-model="saleAttrIdAndValueName" :placeholder="unSelectSaleAttr.length
+        ? `还未选择${unSelectSaleAttr.length}个`
+        : '无'
+        ">
+        <el-option v-for="(item, index) in unSelectSaleAttr" :key="item.id" :label="item.name"
+          :value="`${item.id}:${item.name}`"></el-option>
       </el-select>
-      <el-button
-        :disabled="saleAttrIdAndValueName ? false : true"
-        style="margin-left: 10px"
-        type="primary"
-        size="default"
-        icon="Plus"
-        @click="addSaleAttr"
-      >
+      <el-button :disabled="saleAttrIdAndValueName ? false : true" style="margin-left: 10px" type="primary" size="default"
+        icon="Plus" @click="addSaleAttr">
         添加属性
       </el-button>
 
       <el-table border style="margin: 10px 0" :data="saleAttr">
-        <el-table-column
-          label="序号"
-          type="index"
-          align="center"
-          width="80px"
-        ></el-table-column>
-        <el-table-column
-          label="销售属性名字"
-          prop="saleAttrName"
-          width="120px"
-        ></el-table-column>
+        <el-table-column label="序号" type="index" align="center" width="80px"></el-table-column>
+        <el-table-column label="销售属性名字" prop="saleAttrName" width="120px"></el-table-column>
         <el-table-column label="销售属性值">
           <template #="{ row, $index }">
-            <el-tag
-              v-for="(item, index) in row.spuSaleAttrValueList"
-              class="mx-1"
-              closable
-              style="margin: 0 5px"
-              @close="row.spuSaleAttrValueList.splice(index, 1)"
-              :key="row.id"
-            >
+            <el-tag v-for="(item, index) in row.spuSaleAttrValueList" class="mx-1" closable style="margin: 0 5px"
+              @close="row.spuSaleAttrValueList.splice(index, 1)" :key="row.id">
               {{ item.saleAttrValueName }}
             </el-tag>
-            <el-input
-              style="width: 100px"
-              v-if="row.flag == true"
-              v-model="row.SaleAttrValue"
-              placeholder="请您输入属性值"
-              size="small"
-              @blur="toLook(row)"
-            ></el-input>
-            <el-button
-              @click="toEdit(row)"
-              v-else
-              type="primary"
-              size="small"
-              icon="Plus"
-            ></el-button>
+            <el-input style="width: 100px" v-if="row.flag == true" v-model="row.SaleAttrValue" placeholder="请您输入属性值"
+              size="small" @blur="toLook(row)"></el-input>
+            <el-button @click="toEdit(row)" v-else type="primary" size="small" icon="Plus"></el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="120px">
           <template #="{ row, $index }">
-            <el-button
-              type="primary"
-              size="smalll"
-              icon="Delete"
-              @click="saleAttr.splice($index, 1)"
-            ></el-button>
+            <el-button type="primary" size="small" icon="Delete" @click="saleAttr.splice($index, 1)"></el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-form-item>
-    <el-form-item label="" size="normal">
+    <el-form-item>
       <el-button type="primary" size="default" @click="save">保存</el-button>
       <el-button type="primary" size="default" @click="cancel">取消</el-button>
     </el-form-item>
@@ -293,13 +229,13 @@ const addSaleAttr = () => {
   saleAttrIdAndValueName.value = ''
 }
 const toLook = (row: SaleAttr) => {
-  const { baseSaleAttrId, SaleAttrValue } = row
+  const { baseSaleAttrId, saleAttrValue } = row
   let newSaleAttrValue: SaleAttrValue = {
     baseSaleAttrId,
-    SaleAttrValueName: SaleAttrValue as string,
+    saleAttrValueName: saleAttrValue as string,
   }
 
-  if ((SaleAttrValue as string).trim() == '') {
+  if ((saleAttrValue as string).trim() == '') {
     ElMessage({
       type: 'error',
       message: '属性值不能为空的',
@@ -307,7 +243,7 @@ const toLook = (row: SaleAttr) => {
     return
   }
 
-  let repeat = row.spuSaleAttrValueList.fin((item) => {
+  let repeat = row.spuSaleAttrValueList.find((item) => {
     return item.saleAttrValueName == saleAttrValue
   })
   if (repeat) {
@@ -345,17 +281,17 @@ const initAddSpu = async (c3Id: number | string) => {
   AllTradeMark.value = result.data
   allSaleAttr.value = result1.data
 }
+
 defineExpose({ initHasSpuData, initAddSpu })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .avatar-uploader .avatar {
   width: 178px;
   height: 178px;
   display: block;
 }
 </style>
-
 <style>
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
@@ -378,4 +314,4 @@ defineExpose({ initHasSpuData, initAddSpu })
   text-align: center;
 }
 </style>
-<style lang="scss" scoped></style>
+

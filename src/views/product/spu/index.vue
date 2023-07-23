@@ -3,88 +3,35 @@
     <Category :scene="scene" />
     <el-card style="margin: 10px 0">
       <div v-show="scene == 0">
-        <el-button
-          @click="addSpu"
-          type="primary"
-          size="default"
-          icon="Plus"
-          :disabled="categoryStore.c3Id ? false : true"
-        >
+        <el-button @click="addSpu" type="primary" size="default" icon="Plus"
+          :disabled="categoryStore.c3Id ? false : true">
           添加SPU
         </el-button>
 
         <el-table border style="margin: 10px 10px" :data="records">
-          <el-table-column
-            label="序号"
-            type="index"
-            align="center"
-            width="80px"
-          ></el-table-column>
+          <el-table-column label="序号" type="index" align="center" width="80px"></el-table-column>
           <el-table-column label="SPU名称" prop="spuName"></el-table-column>
-          <el-table-column
-            label="SPU描述"
-            prop="description"
-            show-overflow-tooltip
-          ></el-table-column>
+          <el-table-column label="SPU描述" prop="description" show-overflow-tooltip></el-table-column>
           <el-table-column label="SPU操作">
             <template #="{ row, $index }">
-              <el-button
-                type="primary"
-                size="small"
-                icon="Plus"
-                title="添加SKU"
-                @click="addSku(row)"
-              ></el-button>
-              <el-button
-                type="primary"
-                size="small"
-                icon="Edit"
-                @click="updateSpu()"
-              ></el-button>
-              <el-button
-                type="primary"
-                size="small"
-                icon="View"
-                @click="findSku(row)"
-              ></el-button>
-              <el-popconfirm
-                :title="`你确定删除${row.spuName}?`"
-                width="200px"
-                @confirm="deleteSpu(row)"
-              >
+              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku(row)"></el-button>
+              <el-button type="primary" size="small" icon="Edit" @click="updateSpu()"></el-button>
+              <el-button type="primary" size="small" icon="View" @click="findSku(row)"></el-button>
+              <el-popconfirm :title="`你确定删除${row.spuName}?`" width="200px" @confirm="deleteSpu(row)">
                 <template #reference>
-                  <el-button
-                    type="primary"
-                    size="small"
-                    icon="Delete"
-                  ></el-button>
+                  <el-button type="primary" size="small" icon="Delete"></el-button>
                 </template>
               </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
 
-        <el-pagination
-          v-model:current-page="pageNo"
-          v-model:page-size="pageSize"
-          :page-sizes="[3, 5, 7]"
-          :background="true"
-          layout=" prev, pager, next, jumper,->,total, sizes,"
-          :total="400"
-          @size-change="changeSize"
-          @current-change="getHasSpu"
-        />
+        <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[3, 5, 7]"
+          :background="true" layout=" prev, pager, next, jumper,->,total, sizes," :total="400" @size-change="changeSize"
+          @current-change="getHasSpu" />
       </div>
-      <spuForm
-        ref="spu"
-        v-show="scene == 1"
-        @changeScene="changeScene"
-      ></spuForm>
-      <skuForm
-        ref="sku"
-        v-show="scene == 2"
-        @changeScene="changeScene"
-      ></skuForm>
+      <spuForm ref="spu" v-show="scene == 1" @changeScene="changeScene"></spuForm>
+      <skuForm ref="sku" v-show="scene == 2" @changeScene="changeScene"></skuForm>
       <el-dialog title="SKU列表" v-model="show">
         <el-table :data="skuArr" border>
           <el-table-column label="SKU名称" prop="skuName"></el-table-column>
@@ -92,10 +39,7 @@
           <el-table-column label="SKU重量" prop="weight"></el-table-column>
           <el-table-column label="SKU图片">
             <template #="{ row, $index }">
-              <img
-                :src="row.skuDefaultImg"
-                style="width: 100px; height: 100px"
-              />
+              <img :src="row.skuDefaultImg" style="width: 100px; height: 100px" />
             </template>
           </el-table-column>
         </el-table>
@@ -196,7 +140,7 @@ const deleteSpu = async (row: SpuData) => {
     getHasSpu(records.value.length > 1 ? pageNo.value : pageNo.value - 1)
   } else {
     ElMessage({
-      type: '',
+      type: 'error',
       message: '删除失败',
     })
   }

@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 
 import { reqC1, reqC2, reqC3 } from '@/api/product/attr'
 import { CategoryResponseData } from '@/api/product/attr/type'
+import type { CategoryState } from './types/type'
 
 const useCategoryStore = defineStore('Category', {
-  state: () => {
+  state: ():CategoryState => {
     return {
       c1Arr: [],
       c1Id: '',
@@ -30,7 +31,6 @@ const useCategoryStore = defineStore('Category', {
     },
     async getC3() {
       const result: CategoryResponseData = await reqC3(this.c2Id)
-
       if (result.code == 200) {
         this.c3Arr = result.data
       }

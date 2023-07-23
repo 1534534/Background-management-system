@@ -31,7 +31,7 @@ export interface SkuData {
 
 export interface SkuResponseData extends ResponseData {
   data: {
-    record: SkuData[]
+    records: SkuData[]
     total: number
     size: number
     current: number

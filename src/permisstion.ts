@@ -1,6 +1,7 @@
 //路由鉴权：项目当中路由能不能被访问的权限
 import router from '@/router'
 import setting from './setting'
+//@ts-ignore
 import nprogress from 'nprogress'
 //引入进度条
 import 'nprogress/nprogress.css'
@@ -31,9 +32,9 @@ router.beforeEach(async (to: any, from: any, next: any) => {
       else {
         try {
           await userStore.userInfo()
-          next()
+          next({...to})
         } catch (error) {
-          userStore.userLogout()
+           await userStore.userLogout()
 
           next({ path: '/login', query: { redirect: to.path } })
         }

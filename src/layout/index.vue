@@ -11,7 +11,7 @@
         <!-- 菜单组件 -->
         <el-menu
           :collapse="LayOutSetingStore.fold"
-          :default-active="$router.path"
+          :default-active="$route.path"
           background-color="#001529"
           text-color="white"
         >
@@ -44,6 +44,7 @@ import useUserStore from '@/store/modules/user'
 let userStore = useUserStore()
 import useLayOutSetingStore from '@/store/modules/setting'
 let LayOutSetingStore = useLayOutSetingStore()
+
 </script>
 <style scoped lang="scss">
 .layout_container {

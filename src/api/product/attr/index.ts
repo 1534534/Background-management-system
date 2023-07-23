@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { CategoryResponseData, Attr, AttrResponseData } from ''
+import {  Attr, AttrResponseData } from './type'
 //接口地址
 enum API {
   C1_URL = '/admin/product/getCategory1',
